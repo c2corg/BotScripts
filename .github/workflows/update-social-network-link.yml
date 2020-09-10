@@ -1,0 +1,31 @@
+name: Update social network link
+
+on:
+#  schedule:
+#    - cron:  '00 00 * * *'
+  push:
+    branches:
+      - "**"
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.7
+      - name: Install campbot
+        run: pip install campbot
+      - name: Update link
+        run: python scripts/update_social_networks_link.py
+        env:
+          SCRIPT_LOGIN: rabot
+          SCRIPT_PASSWORD: ${{ secrets.RABOT_PASSWORD }}
+          SCRIPT_TOPIC_ID: 267322
+          SCRIPT_POST_ID: 2349671
+          SCRIPT_POLL_NAME: poll
+          SCRIPT_OPTION_ID: 0c6a0299c338e7493fd5d7500c92e884
+
